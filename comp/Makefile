@@ -1,5 +1,5 @@
 CC=cc
-CFLAGS= -Wall -Werror -Wextra -D BUFFER_SIZE=20
+CFLAGS= -Wall -Werror -Wextra -D BUFFER_SIZE=3
 NAME=getnextline.a
 DIR_GUARD=@mkdir -p $(@D)
 
@@ -18,6 +18,7 @@ all : $(NAME)
 $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 	@echo "=== Library compiled ==="
+	@echo ""
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(DIR_GUARD)
@@ -26,13 +27,19 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 clean:
 	rm -f $(OBJS)
 	@echo "=== Cleaned Objects ==="
+	@echo ""
 
 fclean:clean
 	rm -f $(NAME)
 	@echo "=== Cleaned Library ==="
+	@echo ""
 
 re:fclean all
 
+test: re
+	@$(CC) -g $(FLAGS) tester.c -L. -l:getnextline.a -o test
+	@echo "=== Compiled tests ==="
+	@echo ""
 #####===========================) DEBUG: run this rule if makefile not correctly shell path	
 
 debug-env:
