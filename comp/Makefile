@@ -1,6 +1,7 @@
 CC=cc
 CFLAGS= -Wall -Werror -Wextra -D BUFFER_SIZE=20
 NAME=getnextline.a
+DIR_GUARD=@mkdir -p $(@D)
 
 C_FILES= get_next_line get_next_line_utils 
 
@@ -19,6 +20,7 @@ $(NAME): $(OBJS)
 	@echo "=== Library compiled ==="
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	$(DIR_GUARD)
 	$(CC) -g $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 clean:
