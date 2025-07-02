@@ -31,6 +31,8 @@ fclean:clean
 	rm -f $(NAME)
 	@echo "=== Cleaned Library ==="
 
+re:fclean all
+
 #####===========================) DEBUG: run this rule if makefile not correctly shell path	
 
 debug-env:
@@ -40,3 +42,5 @@ debug-env:
 	@echo "CC: $(shell which cc)"
 	@echo "AR: $(shell which ar)"
 	@echo "RM: $(shell which rm)"
+
+.PHONY: all re fclean clean 
