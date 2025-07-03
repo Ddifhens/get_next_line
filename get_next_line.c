@@ -6,65 +6,55 @@
 /*   By: jormanue <jormanue@student.42porto.co      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:15:15 by jormanue          #+#    #+#             */
-/*   Updated: 2025/06/18 19:19:53 by jormanue         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:48:28 by jormanue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-char	*readtillbreak(char *buffer, int fd);
-int		checkforbreak(char *str);
-int		passalong(char *buffer, char *str);
+char	*readbuf(int fd, char *buffer)
+{
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
+		return (NULL);
+	if (read(fd, buffer, BUFFER_SIZE) == 0)
+		return (NULL);
+	return (buffer);
+}
 
+int	checkbreak(char *buffer)
+{
+	int	i;
+
+	i = 0;
+	while (*buffer)
+	{
+		if (buffer[i++] == '\n')
+			return (1);
+	}
+	return (0);
+}
 char	*get_next_line(int fd)
 {
 	static char	*buffer;
+	char		*keeper;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	return (readtillbreak(buffer, fd));
-}
-
-char	*readtillbreak(char *buffer, int fd)
-{
-	char	*str;
-	int		readed;
-
-	str = NULL;
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof (char));
-	if (!buffer)
-		return (NULL);
-	readed = read(fd, buffer, BUFFER_SIZE);
-	buffer[readed] = '\0';
-	if (readed > 0)
-		passalong(buffer, str);
-	free(buffer);
-	return (str);
-}
-
-int	passalong(char *buffer, char *str)
-{
-	char	*tmp;
-	int		i;
-
-	tmp = malloc((BUFFER_SIZE + (sizeof(str)) + 1) * sizeof(char));
-	if (str)
+	while (checkbreak(buffer) == 0)
 	{
-		while (str)
-		{
-			tmp[i] = (*str);
-			i++;
-			str++;
-		}
-		free(str);
+		readbuf(fd, buffer);
+		keep(buffer, keeper);
 	}
-	while (*buffer)
-	{
-		if (*buffer == '\n')
-			return (1);
-		tmp[i] = (*buffer);
-		buffer++;
-		i++;
-	}
-	tmp[i] = '\0';
-	return (0);
 }
+/*make keep function, to send read buffer to another string, and keep it there while buffer reads more from the file. 
+ *using a swap like structure of 
+ tmp = malloc str + buffer
+ tmp = str 
+ free str 
+ tmp = buffer 
+ free buffer 
+ malloc str 
+ str = tmp 
+ free tmp 
+ return str 
+ *
+ * small functions! 
+*/
