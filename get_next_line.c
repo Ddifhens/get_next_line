@@ -9,11 +9,11 @@
 /*   Updated: 2025/06/18 19:19:53 by jormanue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "get_next_line.h"
+
 char	*readtillbreak(char *buffer, int fd);
 int		checkforbreak(char *str);
 int		passalong(char *buffer, char *str);
-
-#include "get_next_line.h"
 
 char	*get_next_line(int fd)
 {
@@ -28,9 +28,11 @@ char	*readtillbreak(char *buffer, int fd)
 {
 	char	*str;
 	int		readed;
-	
+
 	str = NULL;
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof (char));
+	if (!buffer)
+		return (NULL);
 	readed = read(fd, buffer, BUFFER_SIZE);
 	buffer[readed] = '\0';
 	if (readed > 0)
@@ -64,5 +66,5 @@ int	passalong(char *buffer, char *str)
 		i++;
 	}
 	tmp[i] = '\0';
-	return(0);
+	return (0);
 }
