@@ -23,5 +23,8 @@
 # include <stdio.h>
 
 char	*get_next_line(int fd);
+char	*readbuff(int fd, char *buffer);
+int		checkbreak(char *buffer);
+int		ft_strlen(char *str);
 
 #endif

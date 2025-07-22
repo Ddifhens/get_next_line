@@ -11,3 +11,16 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+int	ft_strlen(char *str)
+{
+	char nb;
+
+	nb = 0;
+	while(*str)
+	{
+		str++;
+		nb++;
+	}
+	return (nb);
+}

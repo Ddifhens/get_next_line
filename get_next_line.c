@@ -16,6 +16,7 @@ char	*readbuf(int fd, char *buffer)
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
+	buffer[BUFFER_SIZE] = '\0';
 	if (read(fd, buffer, BUFFER_SIZE) == 0)
 		return (NULL);
 	return (buffer);
@@ -26,23 +27,51 @@ int	checkbreak(char *buffer)
 	int	i;
 
 	i = 0;
-	while (*buffer)
+	while (buffer[i])
 	{
 		if (buffer[i++] == '\n')
 			return (1);
 	}
 	return (0);
 }
+char	*keep(char *buffer, char *keeper)
+{
+	char			*eater;
+	unsigned char	i;
+	unsigned char	a;
+
+	i = 0;
+	a = 0;
+	eater = malloc(ft_strlen(buffer) + ft_strlen(keeper) + 1);
+	if (!eater)
+		return(NULL);
+	while (keeper[i])
+	{
+		eater[i] = keeper[i];
+		i++;
+	}
+	a = i;
+	i = 0;
+	while (buffer[i])
+	{
+		eater[a + i] = buffer[i];
+		i++;
+	}
+	eater[a + i] = '\0';
+	return(eater);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*buffer;
 	char		*keeper;
 
-	while (checkbreak(buffer) == 0)
+	while (!buffer || checkbreak(buffer) != 1)
 	{
-		readbuf(fd, buffer);
-		keep(buffer, keeper);
+		buffer = readbuf(fd, buffer);
+		keeper=keep(buffer, keeper);
 	}
+	return (keeper);
 }
 /*make keep function, to send read buffer to another string, and keep it there while buffer reads more from the file. 
  *using a swap like structure of 
