@@ -6,59 +6,91 @@
 /*   By: jormanue <jormanue@student.42porto.co      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:15:15 by jormanue          #+#    #+#             */
-/*   Updated: 2025/07/03 15:48:28 by jormanue         ###   ########.fr       */
+/*   Updated: 2025/07/27 17:57:36 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
 
+char	*swallow(char *waste, char *food)
+{
+	char	*temp;
+
+	temp = ft_strjoin(waste, food);
+	free(waste);
+	return(temp);
+}
+char	*keep(char *str)
+{
+	char	*kept;
+	int		itemsize;
+	int		i;
+
+	i = 0;
+	itemsize = ft_strlenton(str, 1);
+	if (!str)
+		return (NULL);
+	kept = ft_calloc(itemsize + 2, sizeof(char));
+	while (i < itemsize)
+	{
+		kept[i] = str[i];
+		i++;
+	}
+	if (str[i] && str[i] == '\n')
+		kept[i++] = '\n';
+	return (kept);
+}
+
 char	*readbuf(int fd, char *buffer)
 {
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	char	*eater;
+	int		bitten;
+
 	if (!buffer)
-		return (NULL);
-	buffer[BUFFER_SIZE] = '\0';
-	if (read(fd, buffer, BUFFER_SIZE) == 0)
-		return (NULL);
+		buffer = ft_calloc(1,1); 
+	eater = ft_calloc(BUFFER_SIZE, sizeof(char));
+	bitten = 1;
+	while (bitten > 0)
+	{
+		bitten = read(fd, eater, BUFFER_SIZE);
+		if (bitten == -1)
+		{
+			free (eater);
+			return (NULL);
+		}
+		eater[bitten] = '\0';
+		buffer = swallow(buffer, eater);
+		if (ft_strrchr(eater, '\n'))
+			break ;
+	}
+	free(eater);
 	return (buffer);
 }
-
-int	checkbreak(char *buffer)
+char	*remains(char *str)
 {
-	int	i;
+	char	*remains;
+	int		i;
+	int		x;
 
 	i = 0;
-	while (buffer[i])
+	x = 0;
+	i = ft_strlenton(str, 1);
+	if (!str[i])
 	{
-		if (buffer[i++] == '\n')
-			return (1);
+		free (str);
+		return (NULL);
 	}
-	return (0);
-}
-char	*keep(char *buffer, char *keeper)
-{
-	char			*eater;
-	unsigned char	i;
-	unsigned char	a;
-
-	i = 0;
-	a = 0;
-	eater = malloc(ft_strlen(buffer) + ft_strlen(keeper) + 1);
-	if (!eater)
-		return(NULL);
-	while (keeper[i])
+	i++;
+	while (str[x + i])
+		x++;
+	remains = ft_calloc(x + 1, sizeof(char));
+	x = 0;
+	while (str[x + i])
 	{
-		eater[i] = keeper[i];
-		i++;
+		remains[x] = str [x + i];
+		x++;
 	}
-	a = i;
-	i = 0;
-	while (buffer[i])
-	{
-		eater[a + i] = buffer[i];
-		i++;
-	}
-	eater[a + i] = '\0';
-	return(eater);
+	free (str);
+	return (remains);
 }
 
 char	*get_next_line(int fd)
@@ -66,24 +98,12 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*keeper;
 
-	while (!buffer || checkbreak(buffer) != 1)
-	{
-		buffer = readbuf(fd, buffer);
-		keeper=keep(buffer, keeper);
-	}
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+		return (NULL);
+	buffer = (readbuf(fd, buffer));
+	if (!buffer)
+		return (NULL);
+	keeper = keep(buffer);
+	buffer = remains(buffer);
 	return (keeper);
 }
-/*make keep function, to send read buffer to another string, and keep it there while buffer reads more from the file. 
- *using a swap like structure of 
- tmp = malloc str + buffer
- tmp = str 
- free str 
- tmp = buffer 
- free buffer 
- malloc str 
- str = tmp 
- free tmp 
- return str 
- *
- * small functions! 
-*/

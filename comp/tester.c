@@ -19,5 +19,48 @@ int	main(void)
 
 	fd = open("file", O_RDONLY);
 	printf("file descriptor:%i\n", fd);
-	printf("return of gnl:%s\n", get_next_line(fd));
+	printf("printing 20 lines\n1: %s\n", get_next_line(fd));
+	printf("2: %s\n", get_next_line(fd));
+	printf("3: %s\n", get_next_line(fd));
+	printf("4: %s\n", get_next_line(fd));
+	printf("5: %s\n", get_next_line(fd));
+	printf("6: %s\n", get_next_line(fd));
+	printf("7: %s\n", get_next_line(fd));
+	printf("8: %s\n", get_next_line(fd));
+	printf("9: %s\n", get_next_line(fd));
+	printf("10: %s\n", get_next_line(fd));
+	printf("11: %s\n", get_next_line(fd));
+	printf("12: %s\n", get_next_line(fd));
+	printf("13: %s\n", get_next_line(fd));
+	printf("14: %s\n", get_next_line(fd));
+	printf("15: %s\n", get_next_line(fd));
+	printf("16: %s\n", get_next_line(fd));
+	printf("17: %s\n", get_next_line(fd));
+	printf("18: %s\n", get_next_line(fd));
+	printf("19: %s\n", get_next_line(fd));
+	printf("20: %s\n\nChanging Files\n\n", get_next_line(fd));
+	
+	fd = open("bigfile", O_RDONLY);
+	printf("file descriptor:%i\n", fd);
+	printf("printing 20 lines\n1: %s\n", get_next_line(fd));
+	printf("2: %s\n", get_next_line(fd));
+	printf("3: %s\n", get_next_line(fd));
+	printf("4: %s\n", get_next_line(fd));
+	printf("5: %s\n", get_next_line(fd));
+	printf("6: %s\n", get_next_line(fd));
+	printf("7: %s\n", get_next_line(fd));
+	printf("8: %s\n", get_next_line(fd));
+	printf("9: %s\n", get_next_line(fd));
+	printf("10: %s\n", get_next_line(fd));
+	printf("11: %s\n", get_next_line(fd));
+	printf("12: %s\n", get_next_line(fd));
+	printf("13: %s\n", get_next_line(fd));
+	printf("14: %s\n", get_next_line(fd));
+	printf("15: %s\n", get_next_line(fd));
+	printf("16: %s\n", get_next_line(fd));
+	printf("17: %s\n", get_next_line(fd));
+	printf("18: %s\n", get_next_line(fd));
+	printf("19: %s\n", get_next_line(fd));
+	printf("20: %s\n", get_next_line(fd));
+	
 }
