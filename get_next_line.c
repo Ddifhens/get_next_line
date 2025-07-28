@@ -52,13 +52,10 @@ char	*readbuf(int fd, char *buffer)
 	while (bitten > 0)
 	{
 		bitten = read(fd, eater, BUFFER_SIZE);
-		if (bitten == -1)
-		{
-			free (eater);
-			return (NULL);
-		}
 		eater[bitten] = '\0';
 		buffer = swallow(buffer, eater);
+		if (!buffer)
+			return (free(eater), NULL);
 		if (ft_strrchr(eater, '\n'))
 			break ;
 	}
@@ -97,13 +94,21 @@ char	*get_next_line(int fd)
 {
 	static char	*buffer;
 	char		*keeper;
-
+ 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	buffer = (readbuf(fd, buffer));
-	if (!buffer)
+	if (!buffer || buffer == NULL)
+	{
+		free(buffer);
 		return (NULL);
+	}
 	keeper = keep(buffer);
 	buffer = remains(buffer);
+	if (ft_strlenton(keeper, 0) == 0)
+		{
+			free (keeper);
+			return (NULL);
+		}
 	return (keeper);
 }

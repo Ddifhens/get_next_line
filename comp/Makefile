@@ -1,5 +1,5 @@
 CC=cc
-CFLAGS= -Wextra 
+CFLAGS= -Wall -Werror -Wextra 
 NAME=getnextline.a
 DIR_GUARD=@mkdir -p $(@D)
 

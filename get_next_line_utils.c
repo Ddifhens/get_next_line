@@ -14,25 +14,24 @@
 
 int	ft_strlenton(char *str, int n)
 {
-	char nb;
+	unsigned char	nb;
 
 	nb = 0;
 	if (n == 1)
 	{
-		while(str[nb] && str[nb] != '\n')
+		while (str[nb] && str[nb] != '\n')
 			nb++;
 		return (nb);
 	}
-	else 
+	else
 	{
-		while(str[nb])
+		while (str[nb])
 			nb++;
 		return (nb);
 	}
 }
 
-
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
 	size_t	i;

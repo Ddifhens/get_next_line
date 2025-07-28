@@ -16,51 +16,46 @@
 int	main(void)
 {
 	int	fd;	
+	int a;
 
+	//opening small file
+	a = 1;
 	fd = open("file", O_RDONLY);
 	printf("file descriptor:%i\n", fd);
-	printf("printing 20 lines\n1: %s\n", get_next_line(fd));
-	printf("2: %s\n", get_next_line(fd));
-	printf("3: %s\n", get_next_line(fd));
-	printf("4: %s\n", get_next_line(fd));
-	printf("5: %s\n", get_next_line(fd));
-	printf("6: %s\n", get_next_line(fd));
-	printf("7: %s\n", get_next_line(fd));
-	printf("8: %s\n", get_next_line(fd));
-	printf("9: %s\n", get_next_line(fd));
-	printf("10: %s\n", get_next_line(fd));
-	printf("11: %s\n", get_next_line(fd));
-	printf("12: %s\n", get_next_line(fd));
-	printf("13: %s\n", get_next_line(fd));
-	printf("14: %s\n", get_next_line(fd));
-	printf("15: %s\n", get_next_line(fd));
-	printf("16: %s\n", get_next_line(fd));
-	printf("17: %s\n", get_next_line(fd));
-	printf("18: %s\n", get_next_line(fd));
-	printf("19: %s\n", get_next_line(fd));
-	printf("20: %s\n\nChanging Files\n\n", get_next_line(fd));
-	
+	while (a < 9)
+	{
+		printf("%i:%s", a, get_next_line(fd));
+		a++;
+	}
+	close(fd);
+	// opening big file 
+	a = 1;
 	fd = open("bigfile", O_RDONLY);
-	printf("file descriptor:%i\n", fd);
-	printf("printing 20 lines\n1: %s\n", get_next_line(fd));
-	printf("2: %s\n", get_next_line(fd));
-	printf("3: %s\n", get_next_line(fd));
-	printf("4: %s\n", get_next_line(fd));
-	printf("5: %s\n", get_next_line(fd));
-	printf("6: %s\n", get_next_line(fd));
-	printf("7: %s\n", get_next_line(fd));
-	printf("8: %s\n", get_next_line(fd));
-	printf("9: %s\n", get_next_line(fd));
-	printf("10: %s\n", get_next_line(fd));
-	printf("11: %s\n", get_next_line(fd));
-	printf("12: %s\n", get_next_line(fd));
-	printf("13: %s\n", get_next_line(fd));
-	printf("14: %s\n", get_next_line(fd));
-	printf("15: %s\n", get_next_line(fd));
-	printf("16: %s\n", get_next_line(fd));
-	printf("17: %s\n", get_next_line(fd));
-	printf("18: %s\n", get_next_line(fd));
-	printf("19: %s\n", get_next_line(fd));
-	printf("20: %s\n", get_next_line(fd));
-	
+	printf("\n\nfile descriptor:%i\n", fd);
+	while (a <= 100)
+	{
+		printf("%i:%s", a, get_next_line(fd));
+		a++;
+	}
+	printf("\n\n");
+	close(fd);
+	//empty file tests
+	a = 1;
+	fd = open("empty", O_RDONLY);
+	while (a <= 20)
+	{
+		printf("%i:%s", a, get_next_line(fd));
+		a++;
+	}
+	printf("\n\n");
+	// trying tester files trippoullie etc
+	a = 1;
+	close (fd);
+	open("/home/jormanue/francinette/tests/get_next_line/gnlTester/files/alternate_line_nl_with_nl", O_RDONLY);
+	while (a <= 10)
+	{
+		printf("%i:%s", a, get_next_line(fd));
+		a++;
+	}
+	close (fd);
 }
