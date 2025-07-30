@@ -6,7 +6,7 @@
 /*   By: jormanue <jormanue@student.42porto.co      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:15:15 by jormanue          #+#    #+#             */
-/*   Updated: 2025/07/27 17:57:36 by user             ###   ########.fr       */
+/*   Updated: 2025/07/30 20:04:22 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -17,8 +17,9 @@ char	*swallow(char *waste, char *food)
 
 	temp = ft_strjoin(waste, food);
 	free(waste);
-	return(temp);
+	return (temp);
 }
+
 char	*keep(char *str)
 {
 	char	*kept;
@@ -27,6 +28,8 @@ char	*keep(char *str)
 
 	i = 0;
 	itemsize = ft_strlenton(str, 1);
+	if (itemsize == -1)
+		itemsize = ft_strlenton(str, 0);
 	if (!str)
 		return (NULL);
 	kept = ft_calloc(itemsize + 2, sizeof(char));
@@ -46,12 +49,16 @@ char	*readbuf(int fd, char *buffer)
 	int		bitten;
 
 	if (!buffer)
-		buffer = ft_calloc(1,1); 
-	eater = ft_calloc(BUFFER_SIZE, sizeof(char));
+		buffer = ft_calloc(1, 1);
+	eater = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	bitten = 1;
 	while (bitten > 0)
 	{
 		bitten = read(fd, eater, BUFFER_SIZE);
+		if (bitten < 0)
+		{
+			return (free (eater), free (buffer), NULL);
+		}
 		eater[bitten] = '\0';
 		buffer = swallow(buffer, eater);
 		if (!buffer)
@@ -62,6 +69,7 @@ char	*readbuf(int fd, char *buffer)
 	free(eater);
 	return (buffer);
 }
+
 char	*remains(char *str)
 {
 	char	*remains;
@@ -71,7 +79,7 @@ char	*remains(char *str)
 	i = 0;
 	x = 0;
 	i = ft_strlenton(str, 1);
-	if (!str[i])
+	if (i == -1)
 	{
 		free (str);
 		return (NULL);
@@ -94,21 +102,20 @@ char	*get_next_line(int fd)
 {
 	static char	*buffer;
 	char		*keeper;
- 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = (readbuf(fd, buffer));
-	if (!buffer || buffer == NULL)
+	if (!buffer)
 	{
-		free(buffer);
 		return (NULL);
 	}
 	keeper = keep(buffer);
 	buffer = remains(buffer);
 	if (ft_strlenton(keeper, 0) == 0)
-		{
-			free (keeper);
-			return (NULL);
-		}
+	{
+		free (keeper);
+		return (NULL);
+	}
 	return (keeper);
 }

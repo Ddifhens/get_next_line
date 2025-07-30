@@ -6,7 +6,7 @@
 /*   By: jormanue <jormanue@student.42porto.co      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:28:38 by jormanue          #+#    #+#             */
-/*   Updated: 2025/07/27 17:57:44 by user             ###   ########.fr       */
+/*   Updated: 2025/07/30 20:03:38 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 int	ft_strlenton(char *str, int n)
 {
-	unsigned char	nb;
+	int	nb;
 
 	nb = 0;
 	if (n == 1)
 	{
 		while (str[nb] && str[nb] != '\n')
 			nb++;
-		return (nb);
+		if (str[nb] == '\n')
+			return (nb);
+		else
+			return (-1);
 	}
 	else
 	{
@@ -37,8 +40,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	i;
 	size_t	j;
 
-	str = (char*)malloc(
-		sizeof(*s1) * (ft_strlenton(s1, 0) + ft_strlenton(s2, 0) + 1));
+	str = (char *)malloc(
+			sizeof (*s1) * (ft_strlenton(s1, 0) + ft_strlenton(s2, 0) + 1));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -81,7 +84,6 @@ char	*ft_strrchr(const char *s, int c)
 		return ((char *)i + l);
 	return (NULL);
 }
-
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
