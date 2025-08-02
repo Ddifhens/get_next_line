@@ -18,7 +18,7 @@ void	bigfile(int fd)
 	int	a;
 
 	a = 1;
-	fd = open("bigfile", O_RDONLY);
+	fd = open("files/bigfile", O_RDONLY);
 	printf("\n\nfile descriptor:%i\n", fd);
 	while (a <= 100)
 	{
@@ -34,7 +34,7 @@ void	file(int fd)
 	int	a;
 
 	a = 1;
-	fd = open("file", O_RDONLY);
+	fd = open("files/file", O_RDONLY);
 	printf("file descriptor:%i\n", fd);
 	while (a < 9)
 	{
@@ -49,7 +49,7 @@ void	empty(int fd)
 	int	a;
 
 	a = 1;
-	fd = open("empty", O_RDONLY);
+	fd = open("files/empty", O_RDONLY);
 	while (a <= 20)
 	{
 		printf("%i:%s", a, get_next_line(fd));

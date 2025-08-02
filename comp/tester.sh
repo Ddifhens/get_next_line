@@ -1,7 +1,12 @@
-cd /home/jormanue/Desktop/CC/get_next_line/comp
+DIR=$(pwd)
+
+#coimpile tests
 make test 
-/home/jormanue/Desktop/CC/get_next_line/comp/test | cat > logs/log
+#save output to logs
+$DIR/test | cat > logs/log
+#run test to current terminal 
 echo "\e[32m === Test Output === \e[0m"
-/home/jormanue/Desktop/CC/get_next_line/comp/test
+$DIR/test
+#ending message 
 echo ""
 echo "\e[34m === Created log at ./logs === \e[0m"
