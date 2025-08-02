@@ -23,11 +23,12 @@
 # include <stdio.h>
 
 char	*get_next_line(int fd);
+char	*swallow(char *waste, char *food);
 char	*readbuff(int fd, char *buffer);
-int		checkbreak(char *buffer);
 int		ft_strlenton(char *str, int n);
 void	*ft_memset(void *s, int c, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
+char	*remains(char *str);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
 char	*keep(char *str);

@@ -16,6 +16,8 @@ int	ft_strlenton(char *str, int n)
 {
 	int	nb;
 
+	if (!str)
+		return (0);
 	nb = 0;
 	if (n == 1)
 	{
